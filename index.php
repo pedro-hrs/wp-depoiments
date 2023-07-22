@@ -71,23 +71,37 @@ function register_depoimentos_post_type() {
 }
 
 add_action('init', 'register_depoimentos_post_type',0);
+function obter_depoimentos($atts) {
+    // Definir os atributos padrão do shortcode e mesclar com os atributos recebidos
+    $atts = shortcode_atts(
+        array(
+            'color' => '#FF0000', // Cor padrão é preto (caso não seja informada)
+            'align' => 'left', // Cor padrão é preto (caso não seja informada)
+        ),
+        $atts
+    );
 
-// Quando der, refatorar essa função, removendo esses echos e montando o html dinamicamente de acordo com os posts.
-function obter_depoimentos(){
+    // Argumentos da consulta para obter os depoimentos
+    $query_args = array(
+        'post_type' => 'depoimentos',
+    );
 
-      query_posts( array( 'post_type' => 'depoimentos' ) ); 
-        echo '<div class="wp-depoiments slider">';
-        if ( have_posts() ) : while ( have_posts() ) : the_post(); 
-          echo '<div class="wp-depoiments-wrapper">';
-          echo '<h3 class="wp-depoiments-title">'.get_the_title().'</h3>';
-          echo '<p class="wp-depoiments-content">' . get_the_content() . '<p>';
-          echo '</div>';
-        endwhile; else: 
-        endif;
+    query_posts($query_args);
+    echo '<div class="wp-depoiments slider" style="text-align:'.esc_attr( $atts['align'] ).'">';
+    if (have_posts()) : while (have_posts()) : the_post();
+        echo '<div class="wp-depoiments-wrapper">';
+        echo '<p class="wp-depoiments-content">' . get_the_content() . '<p>';
+        echo '<h5 class="wp-depoiments-title" style="color: ' . esc_attr($atts['color']) . ';">' . get_the_title() . '</h5>';
         echo '</div>';
+      endwhile; else:
+      endif;
+      echo '</div>';
+      wp_reset_query();
+      echo '<style>ul.wp-depoiments-dots>li.slick-active {background-color:' . esc_attr($atts['color']) . ';border: 1.5px solid ' . esc_attr($atts['color']) . ';}</style>';
 }
 
 add_shortcode('depoimentos', 'obter_depoimentos');
+
 
 
 ?>
