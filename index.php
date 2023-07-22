@@ -76,7 +76,7 @@ function obter_depoimentos($atts) {
     $atts = shortcode_atts(
         array(
             'color' => '#FF0000', // Cor padrão é preto (caso não seja informada)
-            'align' => 'left', // Cor padrão é preto (caso não seja informada)
+            'align' => 'left', // Alinhamento padrão à esquerda (caso não seja informada)
         ),
         $atts
     );
