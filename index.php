@@ -4,9 +4,18 @@ Plugin Name: Depoimentos
 Plugin URI:  https://www.prodrigues.com.br
 Description: Plugin wordpress para exibição de depoimentos
 Version:     1.0.0
-Author:      Pedro Rodrigues
-Author URI:  https://www.prodrigues.com.br
+Author:      Pedro Rodrigues / Murilo 
+Author URI:  https://
 */
+function wp_depoiments_scripts(){
+
+  wp_enqueue_script('slick-script','https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.js', array('jquery'), NULL, true);
+  wp_enqueue_style( 'wp-depoiments-style', plugin_dir_url( __FILE__ ) . 'public/css/style.css',false,'1.1','all');
+  wp_enqueue_script( 'wp-depoiments-script', plugin_dir_url( __FILE__ ) . 'public/js/script.js',array('jquery'),'1.1','all');
+}
+add_action('wp_enqueue_scripts', 'wp_depoiments_scripts');
+
+
 function register_depoimentos_post_type() {
 
 	$labels = array(
@@ -60,6 +69,25 @@ function register_depoimentos_post_type() {
 	);
 	register_post_type( 'depoimentos', $args );
 }
+
 add_action('init', 'register_depoimentos_post_type',0);
+
+// Quando der, refatorar essa função, removendo esses echos e montando o html dinamicamente de acordo com os posts.
+function obter_depoimentos(){
+
+      query_posts( array( 'post_type' => 'depoimentos' ) ); 
+        echo '<div class="depoimentos slider">';
+        if ( have_posts() ) : while ( have_posts() ) : the_post(); 
+          echo '<div class="wp-depoiments-wrapper">';
+          echo '<h3 class="wp-depoiments-title">'.get_the_title().'</h3>';
+          echo '<p class="wp-depoiments-content">' . get_the_content() . '<p>';
+          echo '</div>';
+        endwhile; else: 
+        endif;
+        echo '</div>';
+}
+
+add_shortcode('depoimentos', 'obter_depoimentos');
+
 
 ?>
