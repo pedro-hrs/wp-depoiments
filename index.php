@@ -3,9 +3,9 @@
 Plugin Name: Depoimentos
 Plugin URI:  https://www.prodrigues.com.br
 Description: Plugin wordpress para exibição de depoimentos
-Version:     1.0.0
-Author:      Pedro Rodrigues / Murilo 
-Author URI:  https://
+Version:     0.1.0
+Author:      Pedro Rodrigues
+Author URI:  https://www.prodrigues.com.br
 */
 function wp_depoiments_scripts(){
 
