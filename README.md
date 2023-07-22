@@ -19,3 +19,7 @@ Plugin para inserção de depoimentos em projetos wordpress.
 ``.wp-depoiments-text`` Classe do conteúdo do depoimento
 
 ``.wp-depoiments-dots`` Classe dos marcadores de depoimentos
+
+Use os parametros ``color`` e/ou ``align``para alterar a cor de destaque e alinhar o conteúdo.
+
+``[depoimentos color="#FF0000" align="center"]``
