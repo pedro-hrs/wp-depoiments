@@ -76,7 +76,7 @@ add_action('init', 'register_depoimentos_post_type',0);
 function obter_depoimentos(){
 
       query_posts( array( 'post_type' => 'depoimentos' ) ); 
-        echo '<div class="depoimentos slider">';
+        echo '<div class="wp-depoiments slider">';
         if ( have_posts() ) : while ( have_posts() ) : the_post(); 
           echo '<div class="wp-depoiments-wrapper">';
           echo '<h3 class="wp-depoiments-title">'.get_the_title().'</h3>';
