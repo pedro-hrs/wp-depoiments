@@ -75,7 +75,9 @@ function obter_depoimentos($atts) {
     // Definir os atributos padrão do shortcode e mesclar com os atributos recebidos
     $atts = shortcode_atts(
         array(
-            'color' => '#FF0000', // Cor padrão é preto (caso não seja informada)
+            'title-color' => '#000000', // Cor padrão é preto (caso não seja informada)
+            'content-color' => '#000000', // Cor padrão é preto (caso não seja informada)
+            'dots-color' => '#000000', // Cor padrão é preto (caso não seja informada)
             'align' => 'left', // Alinhamento padrão à esquerda (caso não seja informada)
         ),
         $atts
@@ -87,17 +89,17 @@ function obter_depoimentos($atts) {
     );
 
     query_posts($query_args);
+    echo '<style>ul.wp-depoiments-dots>li:not(.slick-active) {background-color: '. esc_attr($atts['dots-color']).'!important;opacity:0.5;};ul.wp-depoiments-dots>li:has(.slick-active) {background-color:' . esc_attr($atts['dots-color']) . '!important;border: 1.5px solid ' . esc_attr($atts['dots-color']) . ';}</style>';
     echo '<div class="wp-depoiments slider" style="text-align:'.esc_attr( $atts['align'] ).'">';
     if (have_posts()) : while (have_posts()) : the_post();
         echo '<div class="wp-depoiments-wrapper">';
-        echo '<p class="wp-depoiments-content">' . get_the_content() . '<p>';
-        echo '<h5 class="wp-depoiments-title" style="color: ' . esc_attr($atts['color']) . ';">' . get_the_title() . '</h5>';
+        echo '<p class="wp-depoiments-content" style="color: ' . esc_attr($atts['content-color']) . ';">' . get_the_content() . '<p>';
+        echo '<h5 class="wp-depoiments-title" style="color: ' . esc_attr($atts['title-color']) . ';">' . get_the_title() . '</h5>';
         echo '</div>';
       endwhile; else:
       endif;
       echo '</div>';
       wp_reset_query();
-      echo '<style>ul.wp-depoiments-dots>li.slick-active {background-color:' . esc_attr($atts['color']) . ';border: 1.5px solid ' . esc_attr($atts['color']) . ';}</style>';
 }
 
 add_shortcode('depoimentos', 'obter_depoimentos');
